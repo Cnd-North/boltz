@@ -545,19 +545,10 @@ def predict(
         return
 
 # Set up trainer
-    strategy = SingleDeviceStrategy(device="cpu")
-        if (isinstance(devices, int) and devices > 1) or (
-        isinstance(devices, list) and len(devices) > 1
-):
-    strategy = DDPStrategy()
-    if len(data) < devices:
-        msg = (
-            "Number of requested devices is greater "
-            "than the number of predictions."
-        )
-        raise ValueError(msg)
-else:
-    strategy = SingleDeviceStrategy(device="cpu")
+    if accelerator == "cpu":
+        strategy = SingleDeviceStrategy(device="cpu")
+    else:
+        strategy = DDPStrategy()
 
 msg = f"Running predictions for {len(data)} structure"
 msg += "s" if len(data) > 1 else ""
@@ -623,10 +614,9 @@ process_inputs(
         default_root_dir=out_dir,
         strategy=strategy,
         callbacks=[pred_writer],
-        accelerator=accelerator,
         devices=devices,
         precision=32,
-)
+    )
 
 
     # Compute predictions
