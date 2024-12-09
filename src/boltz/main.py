@@ -627,7 +627,7 @@ process_inputs(
         devices=devices,
         precision=32,
 )
-    )
+
 
     # Compute predictions
     trainer.predict(
