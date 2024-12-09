@@ -616,7 +616,7 @@ trainer = Trainer(
     callbacks=[pred_writer],
     devices=1,
     precision=32,
-    accelerator="mps",  # Add this line
+    accelerator="cpu",  # Add this line
 )
 
 
