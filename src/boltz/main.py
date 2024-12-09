@@ -545,7 +545,7 @@ def predict(
         return
 
 # Set up trainer
-    strategy = "ddp_cpu"
+    strategy = SingleDeviceStrategy(device="cpu")
         if (isinstance(devices, int) and devices > 1) or (
         isinstance(devices, list) and len(devices) > 1
 ):
