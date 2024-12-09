@@ -616,7 +616,7 @@ trainer = Trainer(
     callbacks=[pred_writer],
     devices=1,
     precision=32,
-    accelerator="plaidml",  # Add this line
+    accelerator="mps",  # Add this line
 )
 
 
