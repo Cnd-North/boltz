@@ -416,8 +416,8 @@ def cli() -> None:
 @click.option(
     "--accelerator",
     type=click.Choice(["gpu", "cpu", "tpu"]),
-    help="The accelerator to use for prediction. Default is gpu.",
-    default="gpu",
+    help="The accelerator to use for prediction. Default is cpu.",
+    default="cpu",
 )
 @click.option(
     "--recycling_steps",
