@@ -616,7 +616,7 @@ def predict(
         output_dir=out_dir / "predictions",
         output_format=output_format,
     )
-
+    strategy = None
     trainer = Trainer(
         default_root_dir=out_dir,
         strategy=strategy,
