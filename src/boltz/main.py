@@ -621,9 +621,10 @@ process_inputs(
 
     trainer = Trainer(
         default_root_dir=out_dir,
+        strategy=strategy,
         callbacks=[pred_writer],
-        accelerator="cpu",
-        devices=1,
+        accelerator=accelerator,
+        devices=devices,
         precision=32,
 )
     )
