@@ -495,7 +495,7 @@ def predict(
     cache: str = "~/.boltz",
     checkpoint: Optional[str] = None,
     devices: int = 1,
-    accelerator: str = "gpu",
+    accelerator: str = "cpu",
     recycling_steps: int = 3,
     sampling_steps: int = 200,
     diffusion_samples: int = 1,
