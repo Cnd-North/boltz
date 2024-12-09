@@ -616,14 +616,14 @@ def predict(
         output_dir=out_dir / "predictions",
         output_format=output_format,
     )
-    strategy = "ddp_cpu"
+
     trainer = Trainer(
         default_root_dir=out_dir,
-        strategy=strategy,
         callbacks=[pred_writer],
-        accelerator="cpu", #added in "cpu" instead of accelerator
-        devices=devices,
+        accelerator="cpu",
+        devices=1,
         precision=32,
+)
     )
 
     # Compute predictions
