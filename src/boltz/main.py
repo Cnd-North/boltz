@@ -616,10 +616,10 @@ def predict(
         output_dir=out_dir / "predictions",
         output_format=output_format,
     )
-    strategy = None
+    #strategy = None
     trainer = Trainer(
         default_root_dir=out_dir,
-        strategy=strategy,
+        strategy=None,
         callbacks=[pred_writer],
         accelerator="cpu", #added in "cpu" instead of accelerator
         devices=devices,
