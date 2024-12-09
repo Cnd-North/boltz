@@ -610,13 +610,14 @@ process_inputs(
         output_format=output_format,
     )
 
-    trainer = Trainer(
-        default_root_dir=out_dir,
-        strategy=strategy,
-        callbacks=[pred_writer],
-        devices=devices,
-        precision=32,
-    )
+trainer = Trainer(
+    default_root_dir=out_dir,
+    strategy=strategy,
+    callbacks=[pred_writer],
+    devices=1,
+    precision=32,
+    accelerator="plaidml",  # Add this line
+)
 
 
     # Compute predictions
