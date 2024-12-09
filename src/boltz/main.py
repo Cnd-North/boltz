@@ -7,7 +7,7 @@ from typing import Literal, Optional
 import click
 import torch
 from pytorch_lightning import Trainer, seed_everything
-from pytorch_lightning.strategies import DDPStrategy
+from pytorch_lightning.strategies import SingleDeviceStrategy
 from pytorch_lightning.utilities import rank_zero_only
 from tqdm import tqdm
 
@@ -544,33 +544,35 @@ def predict(
         click.echo("No predictions to run, exiting.")
         return
 
-    # Set up trainer
+# Set up trainer
     strategy = "ddp_cpu"
-    if (isinstance(devices, int) and devices > 1) or (
+        if (isinstance(devices, int) and devices > 1) or (
         isinstance(devices, list) and len(devices) > 1
-    ):
-        strategy = DDPStrategy()
-        if len(data) < devices:
-            msg = (
-                "Number of requested devices is greater "
-                "than the number of predictions."
-            )
-            raise ValueError(msg)
+):
+    strategy = DDPStrategy()
+    if len(data) < devices:
+        msg = (
+            "Number of requested devices is greater "
+            "than the number of predictions."
+        )
+        raise ValueError(msg)
+else:
+    strategy = SingleDeviceStrategy(device="cpu")
 
-    msg = f"Running predictions for {len(data)} structure"
-    msg += "s" if len(data) > 1 else ""
-    click.echo(msg)
+msg = f"Running predictions for {len(data)} structure"
+msg += "s" if len(data) > 1 else ""
+click.echo(msg)
 
-    # Process inputs
-    ccd_path = cache / "ccd.pkl"
-    process_inputs(
-        data=data,
-        out_dir=out_dir,
-        ccd_path=ccd_path,
-        use_msa_server=use_msa_server,
-        msa_server_url=msa_server_url,
-        msa_pairing_strategy=msa_pairing_strategy,
-    )
+# Process inputs
+ccd_path = cache / "ccd.pkl"
+process_inputs(
+    data=data,
+    out_dir=out_dir,
+    ccd_path=ccd_path,
+    use_msa_server=use_msa_server,
+    msa_server_url=msa_server_url,
+    msa_pairing_strategy=msa_pairing_strategy,
+)
 
     # Load processed data
     processed_dir = out_dir / "processed"
